@@ -1,4 +1,10 @@
 # WakeupGagit2
+I hate waking up in the dark. I hate being forced to get out of bed in general. So I made this thing 1 day after daylight saving plan to turn on a projector before the alarm goes off. For such efficiency, I plagerized df99 in CircuitsArduino linked below so THANK YOU!~
+
+It has been tested working. I recommend connecting your projector to a chromebook that has a alarm to go off 1 minute after the projector turns on. So you get the best audio visual experiance. 
+
+A very ambitious goal is to synthesis video signal from arduino to drive the projector to just display some colors.
+
 Arduino RTC OLED alarm clock that turns on an projector via IR remote every morning. 
 
 https://www.instructables.com/id/DS3231-OLED-clock-with-2-button-menu-setting-and-t/
