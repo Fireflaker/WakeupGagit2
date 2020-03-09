@@ -1,7 +1,11 @@
 # WakeupGagit2
 Arduino RTC OLED alarm clock that turns on an projector via IR remote every morning. 
 
+https://www.instructables.com/id/DS3231-OLED-clock-with-2-button-menu-setting-and-t/
+
+
 Most things are gathered online I am just keeping my progress on git. 
+
 
 Acer
 Power：10C8E11E
