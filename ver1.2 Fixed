@@ -149,20 +149,19 @@ void loop()
     }
 
     if (wake_SET && DS3231_triggered_a1()) { //Display/sound alarm if enabled and triggered
-
-      //MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!
-      if (alreadyRun == false)
-      {
-        SendAcerIR();
-        delay(100);
-        SendAcerIR();
-      }
-      //MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!
-
-
-
       beepcount = beepcount + 1;
       if (beepcount <= 600) { //Sound alarm for 60 seconds
+        
+        //MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!
+        if (alreadyRun == false)
+        {
+          int khz = 38; // 38kHz carrier frequency for the NEC protocol
+          unsigned int irSignal[] = {8800, 4400, 550, 550, 550, 550, 500, 600, 500, 1650, 550, 550, 550, 550, 550, 550, 500, 600, 500, 1650, 550, 1650, 550, 550, 500, 600, 500, 1650, 550, 550, 550, 550, 500, 600, 500, 1650, 550, 1650, 550, 1650, 500, 600, 500, 550, 550, 550, 550, 550, 550, 1650, 500, 600, 500, 550, 550, 550, 550, 1650, 500, 1650, 550, 1650, 550, 1650, 500, 550, 550}; // NEC 10C8E11E
+          irsend.sendRaw(irSignal, sizeof(irSignal) / sizeof(irSignal[0]), khz); //Note the approach used to automatically calculate the size of the array.
+          alreadyRun = true;
+        }
+        //MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!MAGIC!!
+
         if (!flash) { //Flash display and sound interrupted beeper
           display.invertDisplay(1); //Flash inverse video display at 5 Hz
 
@@ -666,11 +665,3 @@ void note (int n, int octave) {
   TCCR2B = 0 << WGM22 | prescaler << CS20;
 }
 #endif
-
-void SendAcerIR()
-{
-  int khz = 38; // 38kHz carrier frequency for the NEC protocol
-  unsigned int irSignal[] = {8800, 4400, 550, 550, 550, 550, 500, 600, 500, 1650, 550, 550, 550, 550, 550, 550, 500, 600, 500, 1650, 550, 1650, 550, 550, 500, 600, 500, 1650, 550, 550, 550, 550, 500, 600, 500, 1650, 550, 1650, 550, 1650, 500, 600, 500, 550, 550, 550, 550, 550, 550, 1650, 500, 600, 500, 550, 550, 550, 550, 1650, 500, 1650, 550, 1650, 550, 1650, 500, 550, 550}; // NEC 10C8E11E
-  irsend.sendRaw(irSignal, sizeof(irSignal) / sizeof(irSignal[0]), khz); //Note the approach used to automatically calculate the size of the array.
-  alreadyRun = true;
-}
