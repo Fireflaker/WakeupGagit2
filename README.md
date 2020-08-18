@@ -1,4 +1,7 @@
 # WakeupGadget2
+
+Important! Make sure the Vcc of the RTC module is connected correctly and has a stable voltage. The circuit will work even when its Vcc is at high impedance. Current will be drown from the data pins to keep the battery charged. But this is bad and will result in inaccurate time keeping up to several minutes per day. 
+
 I hate waking up in the dark. I hate being forced to get out of bed in general. So I made this thing 1 day after daylight saving plan to turn on a projector before the alarm goes off. For such efficiency, I shamelessly pasted df99 in CircuitsArduino linked below so THANK YOU!
 
 It has been tested working. I recommend connecting your projector to a chromebook that has a alarm to go off 1 minute after the projector turns on. So you get the best audio visual experiance. 
