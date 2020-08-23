@@ -17,6 +17,9 @@ Most things are gathered online I am just keeping my progress on git.
 
 
 ![Test Image 1](/IMG_20200823_010739.jpg)
+![Test Image 1](/IMG_20200823_010745.jpg)
+![Test Image 1](/IMG_20200823_010756.jpg)
+
 
 Acer
 Power：10C8E11E
