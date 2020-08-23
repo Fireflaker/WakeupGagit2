@@ -16,6 +16,8 @@ https://www.instructables.com/id/DS3231-OLED-clock-with-2-button-menu-setting-an
 Most things are gathered online I am just keeping my progress on git. 
 
 
+![Test Image 1](/IMG_20200823_010739.jpg)
+
 Acer
 Power：10C8E11E
 Menu： 10C821DE
