@@ -16,8 +16,11 @@ A very ambitious goal is to synthesis video signal from arduino to drive the pro
 
 Arduino RTC OLED alarm clock that turns on an projector via IR remote every morning. 
 
+Huge credit goes to df99 linked below!!
 https://www.instructables.com/id/DS3231-OLED-clock-with-2-button-menu-setting-and-t/
-
+And those who wrote the libraries!
+Espacially the 1106 librariy linked below!
+https://github.com/wonho-maker/Adafruit_SH1106
 
 Most things are gathered online I am just keeping my progress on git. 
 
