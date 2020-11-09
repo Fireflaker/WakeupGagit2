@@ -1,13 +1,12 @@
 # WakeupGadget2
-
-Genuenly very very useful. Cant help but put many more hours into this project. The V3 with car displays well and has all previous features. All you need is an Arduino UNO, a DS3231_I2C real time clock module, a 1306 or 1106 OLED, and an IR led. Optionally you need two more leds that plugs straight into your arduino uno, two push buttons(I use lose wire), and an IR reciever that can record your personalized IR message to do things. 
+The V3 with cat displays well and has all prior features. All you need is an Arduino UNO, a DS3231_I2C real time clock module, a 1306 or 1106 OLED, and an IR led. Optionally you need two more leds that plugs straight into your arduino uno, two push buttons(I use lose wire), and an IR reciever that can record your personalized IR message to do things. 
 
 Im working on designing a 3d printed box for this
 and and record some more IR messages to automate things like ECO mode, brightness, etc. 
 
 Important! Make sure the Vcc of the RTC module is connected correctly and has a stable voltage. The circuit will work even when its Vcc is at high impedance. Current will be drown from the data pins to keep the battery charged. But this is bad and will result in inaccurate time keeping up to several minutes per day. 
 
-I hate waking up in the dark. I hate being forced to get out of bed in general. So I made this thing 1 day after daylight saving plan to turn on a projector before the alarm goes off. For such efficiency, I shamelessly pasted df99 in CircuitsArduino linked below so THANK YOU!
+In response to having to waking up in the dark and be forced to get out of bed in general, I made this thing 1 day after daylight saving plan to turn on a projector before the alarm goes off. Clock code is from df99 in CircuitsArduino linked below.
 
 It has been tested working. I recommend connecting your projector to a chromebook that has a alarm to go off 1 minute after the projector turns on. So you get the best audio visual experiance. 
 
