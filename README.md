@@ -73,16 +73,27 @@ unsigned int  data = 0x10C821DE;
 
 Infocus in42:
 Power：E172E817
+
 Menu: E17240BF
+
 Down: E17228D7
+
 OK: E1724CB3
+
 Up: E172C837
+
 Left: E1728877
+
 Right: E17248B7
+
 Leave: E1720AF5
+
 mute: E172946B
+
 Vol up: E17210EF
+
 Vol down: E17220DF
+
 
 Encoding  : NEC
 Code      : E172E817 (32 bits)
