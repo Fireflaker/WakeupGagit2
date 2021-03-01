@@ -1,0 +1,178 @@
+/**
+ * DS3232 TCXO Calibration
+ * 
+ * Kerry D. Wong
+ * http://www.kerrywong.com
+ * 7/2014
+ */
+
+// change to 32.768kHz
+ 
+#include <Wire.h>
+
+#define DS3232_I2C_ADDRESS B01101000 
+
+const int btn1 = 0;
+const int btn2 = 1;
+
+const int pinBtn1 = 8;
+const int pinBtn2 = 9;
+
+const int BTN_PINS[] = {
+    pinBtn1, pinBtn2};
+boolean btnPressed[] = {
+    false, false};
+
+int currentOffset = 0;
+
+void delayMilliseconds(int ms) {
+    for (int i = 0; i < ms; i++) {
+        delayMicroseconds(1000);
+    }
+}
+
+boolean buttonPressed(int btnIdx) {
+    if (digitalRead(BTN_PINS[btnIdx]) == LOW && !btnPressed[btnIdx]) {
+        delayMilliseconds(20);
+        if (digitalRead(BTN_PINS[btnIdx]) == LOW) {
+            btnPressed[btnIdx] = true;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+boolean buttonRleased(int btnIdx) {
+    if (digitalRead(BTN_PINS[btnIdx]) == HIGH && btnPressed[btnIdx]) {
+        delayMilliseconds(20);
+        if (digitalRead(BTN_PINS[btnIdx]) == HIGH) {
+            btnPressed[btnIdx] = false;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void setControlRegisters(){
+    Wire.beginTransmission(DS3232_I2C_ADDRESS);
+    Wire.write(0x0E);  
+
+    Wire.write(B00011100);
+    Wire.write(B11001000);
+    Wire.endTransmission();
+}
+
+void forceConversion()
+{
+    Wire.beginTransmission(DS3232_I2C_ADDRESS);
+    Wire.write(0x0E);  
+
+    Wire.write(B00111100);
+    Wire.endTransmission();
+}
+
+double getTemperature()
+{
+    byte th = 0;
+    byte tl = 0;
+
+    Wire.beginTransmission(DS3232_I2C_ADDRESS);
+    Wire.write(0x11);
+    Wire.endTransmission();
+
+    Wire.requestFrom(DS3232_I2C_ADDRESS,2);
+
+    while (Wire.available()) {
+        th = Wire.read();
+        tl = Wire.read();
+    }
+
+    double temp = 0;
+    if (th>127) {
+        temp =  th - 256 + (double) (tl >> 6)/4.0;
+    } 
+    else {
+        temp =  th + (double) (tl >> 6)/4.0;
+    }
+
+    return temp;
+}
+
+int getAgingOffset()
+{
+    byte b = 0;
+    int r = 0;
+
+    Wire.beginTransmission(DS3232_I2C_ADDRESS);
+    Wire.write(0x10);
+    Wire.endTransmission();
+
+    Wire.requestFrom(DS3232_I2C_ADDRESS,1);
+
+    while (Wire.available()) {
+        b = Wire.read();
+    }
+
+    double temp = 0;
+    if (b>127) {
+        r =  b - 256;
+    } 
+    else {
+        r =  b;
+    }
+
+    return r;
+}
+
+void setAgingOffset(int offset)
+{
+    if (offset < 0) offset += 256;
+
+    Wire.beginTransmission(DS3232_I2C_ADDRESS);
+    Wire.write(0x10);
+    Wire.write(offset);
+    Wire.endTransmission();
+}
+
+void setupRTC3232(){
+    Wire.begin();
+    setControlRegisters();
+}
+
+void setup()
+{
+    Serial.begin(9600);
+
+    for (int i = 0; i < 2; i++) {
+        pinMode(BTN_PINS[i], INPUT);
+        digitalWrite(BTN_PINS[i], HIGH);
+    }
+
+    setupRTC3232();
+}
+
+void loop()
+{
+    if (buttonPressed(btn1)) {
+        currentOffset++;
+        if (currentOffset > 127) currentOffset = 127;
+        setAgingOffset(currentOffset);
+        Serial.println(getAgingOffset());
+        forceConversion();
+    } 
+    else if (buttonPressed(btn2)) {
+        currentOffset--;
+        if (currentOffset < -128) currentOffset = -128;
+        setAgingOffset(currentOffset);
+        Serial.println(getAgingOffset());
+        forceConversion();
+    } 
+
+    for (int i = 0; i < 2; i++) {
+        if (buttonRleased(i)) {
+            //the button is released, no action is necessary.
+        }
+    }
+}
